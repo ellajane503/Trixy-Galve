@@ -1,0 +1,272 @@
+<html><head><base href="https://example.com">
+<style>
+:root {
+    --primary: #D35400;  /* Autumn orange */
+    --dark: #5D4037;     /* Deep brown */
+}
+
+/* Previous styles remain unchanged */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #FAD961 0%, #F27121 100%);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Previous animations and styles remain unchanged */
+@keyframes falling {
+    0% {
+        transform: translateY(-10vh) rotate(0deg) translateX(0px);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg) translateX(100px);
+        opacity: 0;
+    }
+}
+
+@keyframes sway {
+    0%, 100% {
+        transform: translateX(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateX(20px) rotate(10deg);
+    }
+}
+
+/* Loading animation styles */
+.loading-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loader {
+    width: 80px;
+    height: 80px;
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Previous styles continue */
+.leaf {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: none;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.leaf svg {
+    animation: sway 3s ease-in-out infinite;
+    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.2));
+}
+
+.login-container {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(139, 69, 19, 0.2);
+    width: 100%;
+    max-width: 400px;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+    border: 2px solid rgba(139, 69, 19, 0.1);
+    z-index: 1;
+}
+
+/* Rest of the previous styles remain unchanged */
+.login-container:hover {
+    transform: translateY(-5px);
+}
+
+h1 {
+    color: var(--dark);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #CD853F;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: white;
+}
+
+.input-group label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #8B4513;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    font-size: 1rem;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 10px;
+    font-size: 0.8rem;
+    background: white;
+    padding: 0 5px;
+    color: var(--primary);
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+button:hover {
+    background: #A04000;
+}
+</style>
+</head>
+<body>
+    <div class="loading-overlay">
+        <div class="loader"></div>
+    </div>
+    
+    <div class="login-container">
+        <h1>Welcome Back</h1>
+        <form id="loginForm">
+            <div class="input-group">
+                <input type="text" id="name" placeholder=" " required>
+                <label for="name">Name</label>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder=" " required>
+                <label for="password">Password</label>
+            </div>
+            <button type="submit">Log In</button>
+        </form>
+    </div>
+
+<script>
+function createLeaf() {
+    const leaf = document.createElement('div');
+    leaf.classList.add('leaf');
+    
+    const leafPaths = [
+        'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z',
+        'M12 1L3 21h18L12 1zm0 3l7.53 16H4.47L12 5h10l3.67 6-3.67 6z',
+        'M17 3H7l-5 8 5 8h10l5-8-5-8zm0 14H7L3.33 11 7 5h10l3.67 6-3.67 6z'
+    ];
+    
+    const autumnColors = ['#D35400', '#A04000', '#8B4513', '#CD853F', '#DEB887'];
+    
+    leaf.innerHTML = `<svg viewBox="0 0 24 24" fill="${autumnColors[Math.floor(Math.random() * autumnColors.length)]}">
+        <path d="${leafPaths[Math.floor(Math.random() * leafPaths.length)]}"/>
+    </svg>`;
+    
+    leaf.style.left = Math.random() * 100 + 'vw';
+    leaf.style.animation = `falling ${Math.random() * 5 + 5}s linear infinite`;
+    
+    const size = Math.random() * 20 + 20;
+    leaf.style.width = `${size}px`;
+    leaf.style.height = `${size}px`;
+    
+    document.body.appendChild(leaf);
+    
+    setTimeout(() => {
+        leaf.remove();
+    }, 10000);
+}
+
+setInterval(createLeaf, 200);
+
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('name').value;
+    const password = document.getElementById('password').value;
+    
+    if (!name || !password) {
+        alert('Please fill in all fields');
+        return;
+    }
+    
+    const loadingOverlay = document.querySelector('.loading-overlay');
+    loadingOverlay.style.display = 'flex';
+    
+    const button = this.querySelector('button');
+    const originalText = button.textContent;
+    button.textContent = 'Logging in...';
+    button.disabled = true;
+    
+    setTimeout(() => {
+        loadingOverlay.style.display = 'none';
+        button.textContent = originalText;
+        button.disabled = false;
+        alert('Login successful!');
+    }, 1500);
+});
+
+document.querySelectorAll('.input-group input').forEach(input => {
+    input.addEventListener('focus', e => {
+        e.target.parentElement.classList.add('focused');
+    });
+    
+    input.addEventListener('blur', e => {
+        if (!e.target.value) {
+            e.target.parentElement.classList.remove('focused');
+        }
+    });
+});
+</script>
+</body></html>
